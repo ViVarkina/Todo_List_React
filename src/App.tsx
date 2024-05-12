@@ -1,5 +1,6 @@
 import './App.css'
 import Todolist, {Task} from "./Todolist.tsx";
+import {useState} from "react";
 
 const tasks : Task[] = [
     {id:1, task:"Покушать", isDone:true},
@@ -9,9 +10,9 @@ const tasks : Task[] = [
     {id:5, task:"Прогулка", isDone:false},
 ]
 
-type FilterType = "All" | "On" | "Off"
+export type FilterType = "All" | "On" | "Off"
 function App() {
-    const filterState = "All"
+    const [filterState,setFilterState] = useState("All")
 
     let filterTask :Task[] = []
 
@@ -28,7 +29,7 @@ function App() {
 
     return (
     <>
-        <Todolist title={"Опа че могу"} tasks={filterTask}/>
+        <Todolist title={"Опа че могу"} tasks={filterTask} setFilterState={setFilterState} filterState={filterState} />
     </>
   )
 }

@@ -1,8 +1,11 @@
 import './App.css'
+import {FilterType} from "./App.tsx";
 
 interface Props{
     title: string
     tasks: Task[]
+    setFilterState: (filterState: FilterType)=>void
+    filterState: FilterType
 }
 export interface Task{
     id: number
@@ -10,8 +13,7 @@ export interface Task{
     isDone: boolean
 }
 
-
-function App({title,tasks}: Props) {
+function App({title,tasks, setFilterState, filterState}: Props) {
 
     return (
         <>
@@ -24,9 +26,9 @@ function App({title,tasks}: Props) {
                 ))}
 
             </ul>
-            <button>Все</button>
-            <button>Завершенные</button>
-            <button>Незавшенные</button>
+            <button onClick={()=>setFilterState={"All"}}>Все</button>
+            <button onClick={()=>setFilterState={"On"}}>Завершенные</button>
+            <button onClick={()=>setFilterState={"Off"}}>Незавшенные</button>
         </>
     )
 }
