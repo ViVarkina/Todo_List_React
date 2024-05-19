@@ -14,7 +14,7 @@ export interface Task{
 }
 
 function App({title,tasks, setFilterState, filterState}: Props) {
-
+    console.log(filterState)
     return (
         <>
             <div>{title}</div>
@@ -26,9 +26,9 @@ function App({title,tasks, setFilterState, filterState}: Props) {
                 ))}
 
             </ul>
-            <button onClick={()=>setFilterState={"All"}}>Все</button>
-            <button onClick={()=>setFilterState={"On"}}>Завершенные</button>
-            <button onClick={()=>setFilterState={"Off"}}>Незавшенные</button>
+            <button onClick={()=>setFilterState("All")}>Все</button>
+            <button onClick={()=>setFilterState("On")}>Завершенные</button>
+            <button onClick={()=>setFilterState("Off")}>Незавшенные</button>
         </>
     )
 }

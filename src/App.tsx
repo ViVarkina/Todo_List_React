@@ -12,7 +12,7 @@ const tasks : Task[] = [
 
 export type FilterType = "All" | "On" | "Off"
 function App() {
-    const [filterState,setFilterState] = useState("All")
+    const [filterState,setFilterState] = useState<FilterType>("All")
 
     let filterTask :Task[] = []
 
