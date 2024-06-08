@@ -1,23 +1,32 @@
 import './App.css'
 import {FilterType} from "./App.tsx";
+// import {useState} from "react";
+import {v4 as uuisv4} from "uuid";
 
 interface Props{
     title: string
     tasks: Task[]
     setFilterState: (filterState: FilterType)=>void
-    filterState: FilterType
+    setTasks: (tasks: Task[])=>void
 }
 export interface Task{
-    id: number
+    id: string
     task: string
     isDone: boolean
 }
 
-function App({title,tasks, setFilterState, filterState}: Props) {
-    console.log(filterState)
+function App({title,tasks, setFilterState, setTasks}: Props) {
+
+    const addTask=()=>{
+        const newArr = [...tasks]
+        newArr.push({id:uuisv4(), task:"пупипу", isDone: false})
+        setTasks(newArr)
+        console.log(tasks)
+    }
     return (
         <>
             <div>{title}</div>
+            <button onClick={addTask}>Добавить</button>
             <ul>
                 {tasks.map((el)=>(
                     <li>
@@ -27,8 +36,8 @@ function App({title,tasks, setFilterState, filterState}: Props) {
 
             </ul>
             <button onClick={()=>setFilterState("All")}>Все</button>
-            <button onClick={()=>setFilterState("On")}>Завершенные</button>
-            <button onClick={()=>setFilterState("Off")}>Незавшенные</button>
+            <button onClick={()=>setFilterState("Off")}>Завершенные</button>
+            <button onClick={()=>setFilterState("On")}>Незавершенные</button>
         </>
     )
 }

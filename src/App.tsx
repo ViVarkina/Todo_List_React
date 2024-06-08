@@ -1,17 +1,20 @@
 import './App.css'
 import Todolist, {Task} from "./Todolist.tsx";
 import {useState} from "react";
+import {v4 as uuisv4} from "uuid";
 
-const tasks : Task[] = [
-    {id:1, task:"Покушать", isDone:true},
-    {id:2, task:"Поспать", isDone:false},
-    {id:3, task:"Покушать", isDone:false},
-    {id:4, task:"Попить", isDone:true},
-    {id:5, task:"Прогулка", isDone:false},
+const initialTasks : Task[] = [
+    {id:uuisv4(), task:"Покушать", isDone:true},
+    {id:uuisv4(), task:"Поспать", isDone:false},
+    {id:uuisv4(), task:"Покушать", isDone:false},
+    {id:uuisv4(), task:"Попить", isDone:true},
+    {id:uuisv4(), task:"Прогулка", isDone:false},
+    {id:uuisv4(), task:"Покушать", isDone:false},
 ]
 
 export type FilterType = "All" | "On" | "Off"
 function App() {
+    const [tasks, setTasks] =useState<Task[]>(initialTasks)
     const [filterState,setFilterState] = useState<FilterType>("All")
 
     let filterTask :Task[] = []
@@ -29,7 +32,7 @@ function App() {
 
     return (
     <>
-        <Todolist title={"Опа че могу"} tasks={filterTask} setFilterState={setFilterState} filterState={filterState} />
+        <Todolist title={"Опа че могу"} tasks={filterTask} setFilterState={setFilterState} setTasks={setTasks}/>
     </>
   )
 }
