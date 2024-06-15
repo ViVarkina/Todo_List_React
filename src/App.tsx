@@ -12,27 +12,12 @@ const initialTasks : Task[] = [
     {id:uuisv4(), task:"Покушать", isDone:false},
 ]
 
-export type FilterType = "All" | "On" | "Off"
+
 function App() {
     const [tasks, setTasks] =useState<Task[]>(initialTasks)
-    const [filterState,setFilterState] = useState<FilterType>("All")
-
-    let filterTask :Task[] = []
-
-    if (filterState === "All"){
-        filterTask = tasks
-    }
-    else if (filterState === "On"){
-        filterTask = tasks.filter(el => !el.isDone)
-    }
-    else if (filterState === "Off"){
-        filterTask = tasks.filter(el => el.isDone)
-    }
-
-
     return (
     <>
-        <Todolist title={"Опа че могу"} tasks={filterTask} setFilterState={setFilterState} setTasks={setTasks}/>
+        <Todolist title={"Опа че могу"} tasks={tasks} setTasks={setTasks}/>
     </>
   )
 }

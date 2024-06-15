@@ -1,57 +1,44 @@
 import './App.css'
-import {FilterType} from "./App.tsx";
-// import {useState} from "react";
-import {v4 as uuisv4} from "uuid";
+import {FilterBlock} from "./filterBlock/FilterBlock.tsx";
+import {TasksList} from "./tasksList/TasksList.tsx";
+import {AddTask} from "./addTask/AddTask.tsx";
 import {useState} from "react";
 
 interface Props{
     title: string
     tasks: Task[]
-    setFilterState: (filterState: FilterType)=>void
     setTasks: (tasks: Task[])=>void
 }
+
 export interface Task{
     id: string
     task: string
     isDone: boolean
 }
 
-function App({title,tasks, setFilterState, setTasks}: Props) {
+function TodoList({title,tasks, setTasks}: Props) {
+    type FilterType = "All" | "On" | "Off"
+    const [filterState,setFilterState] = useState<FilterType>("All")
 
-    const [value, setValue]=useState<string>("")
+    let filterTask :Task[] = []
 
-    const addTask=()=>{
-        if (value){
-            const newArr = [...tasks]
-            newArr.push({id:uuisv4(), task:value, isDone: false})
-            setTasks(newArr)
-            setValue("")
-        }
-        else{
-
-        }
-
+    if (filterState === "All"){
+        filterTask = tasks
     }
+    else if (filterState === "On"){
+        filterTask = tasks.filter(el => !el.isDone)
+    }
+    else if (filterState === "Off"){
+        filterTask = tasks.filter(el => el.isDone)
+    }
+
     return (
         <>
             <div>{title}</div>
-            <input type={"text"} value={value} onChange={(e)=>{
-                setValue(e.currentTarget.value)}}/>
-            <button onClick={addTask}>Добавить</button>
-
-            <ul>
-                {tasks.map((el) => (
-                    <li>
-                        <input type={"checkbox"} checked={el.isDone}/>{el.task}
-                    </li>
-                ))}
-
-            </ul>
-            <button onClick={() => setFilterState("All")}>Все</button>
-            <button onClick={() => setFilterState("Off")}>Завершенные</button>
-            <button onClick={() => setFilterState("On")}>Незавершенные</button>
+            <AddTask tasks={filterTask} setTasks={setTasks}/>
+            <TasksList tasks={tasks} setTasks={setTasks} filteredTask={filterTask}/>
+            <FilterBlock setFilterState={setFilterState}/>
         </>
     )
 }
-
-export default App
+export default TodoList
