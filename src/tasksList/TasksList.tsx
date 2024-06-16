@@ -1,5 +1,6 @@
 import {ChangeEvent} from "react";
 import {Task} from "../Todolist.tsx";
+import css from "./TasksList.module.css"
 
 
 interface Props{
@@ -32,7 +33,7 @@ export const TasksList=({tasks, setTasks,filteredTask}:Props)=>{
     return <>
         <ul>
             {filteredTask.map((el) => (
-                <li>
+                <li className={css.isDone}>
                     {/*className={css.isDone}*/}
                     <input type={"checkbox"} checked={el.isDone}
                            onChange={(event) => onCheckedCheckbox(event, el.id)}/>{el.task}

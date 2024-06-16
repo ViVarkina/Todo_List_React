@@ -55,18 +55,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.isDone{
-  position: relative;
-}
-
-.isDone:after{
-  position: absolute;
-  width: 200px;
-  height: 2px;
-  background-color: white;
-  left: 0;
-  top: 50%;
-}
 
 @media (prefers-color-scheme: light) {
   :root {
