@@ -1,4 +1,4 @@
-import { v4 as uuisv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { ChangeEvent, useState } from 'react'
 import { Task } from '../Todolist.tsx'
 
@@ -13,7 +13,7 @@ export const AddTask = ({ tasks, setTasks }: Props) => {
   const addTask = () => {
     if (value) {
       const newArr = [...tasks]
-      newArr.unshift({ id: uuisv4(), task: value, isDone: false })
+      newArr.unshift({ id: uuidv4(), task: value, isDone: false })
       setTasks(newArr)
       setValue('')
     }
