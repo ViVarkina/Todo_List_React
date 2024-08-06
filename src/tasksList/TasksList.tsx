@@ -1,20 +1,23 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Task } from '../Todolist.tsx'
 import css from './TasksList.module.css'
+import { TaskType } from "../App.tsx";
 
-interface Props {
+interface PropsType {
   tasks: Task[]
-  setTasks: (tasks: Task[]) => void
-  filteredTask: Task[]
+  filteredTask:Task[]
+  setTasks: Dispatch<SetStateAction<TaskType>>
+  todolistId:string
 }
 
-export const TasksList = ({ tasks, setTasks, filteredTask }: Props) => {
+export const TasksList = ({ tasks, setTasks, filteredTask , todolistId}: PropsType) => {
   const onDeleteTask = (id: string) => {
-    const copyArr = [...tasks]
-    const filterTasks = copyArr.filter((el) => el.id !== id)
-    setTasks(filterTasks)
+      setTasks((prevState) => {
+        const targetTodolist = prevState[todolistId]
+        const filteredTask = targetTodolist.filter((el) => el.id !== id)
+        return { ...prevState, ...{[todolistId]: filteredTask }}
+      })
   }
-
   const onCheckedCheckbox = (el: ChangeEvent<HTMLInputElement>, id: string) => {
     const newArr = [...tasks]
     const changeTask = newArr.find((task) => task.id === id)
