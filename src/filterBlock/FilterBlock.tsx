@@ -1,4 +1,4 @@
-import { FilterType } from '../App.tsx'
+import { FilterType } from '../Todolist.tsx'
 
 interface Props {
   setFilterState: (filterState: FilterType) => void

@@ -1,38 +1,41 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { Task } from '../Todolist.tsx'
 import css from './TasksList.module.css'
-import { TaskType } from "../App.tsx";
+import { TaskType } from '../App.tsx'
 
 interface PropsType {
-  tasks: Task[]
-  filteredTask:Task[]
+  filteredTask: Task[]
   setTasks: Dispatch<SetStateAction<TaskType>>
-  todolistId:string
+  todolistId: string
 }
 
-export const TasksList = ({ tasks, setTasks, filteredTask , todolistId}: PropsType) => {
+export const TasksList = ({ setTasks, filteredTask, todolistId }: PropsType) => {
   const onDeleteTask = (id: string) => {
-      setTasks((prevState) => {
-        const targetTodolist = prevState[todolistId]
-        const filteredTask = targetTodolist.filter((el) => el.id !== id)
-        return { ...prevState, ...{[todolistId]: filteredTask }}
-      })
+    setTasks((prevState) => {
+      const targetTodolist = prevState[todolistId]
+      const filteredTask = targetTodolist.filter((el) => el.id !== id)
+      return { ...prevState, ...{ [todolistId]: filteredTask } }
+    })
   }
   const onCheckedCheckbox = (el: ChangeEvent<HTMLInputElement>, id: string) => {
-    const newArr = [...tasks]
-    const changeTask = newArr.find((task) => task.id === id)
-    if (changeTask) {
-      changeTask.isDone = el.target.checked
-      const newTasks = newArr.map((task) => (task.id == id ? changeTask : task))
-      setTasks(newTasks)
-    }
+    setTasks((prevState) => {
+      const tasks = prevState[todolistId]
+      const resultTasks = tasks.map((task) =>
+        task.id === id ? { ...task, isDone: el.target.checked } : task
+      )
+      const restObj = {
+        [todolistId]: resultTasks,
+      }
+
+      return { ...prevState, ...restObj }
+    })
   }
 
   return (
     <>
       <ul>
         {filteredTask.map((el) => (
-          <li className={el.isDone ? true : css.isDone}>
+          <li className={el.isDone ? undefined : css.isDone}>
             <input
               type={'checkbox'}
               checked={el.isDone}

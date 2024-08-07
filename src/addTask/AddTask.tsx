@@ -1,20 +1,25 @@
 import { v4 as uuidv4 } from 'uuid'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import { Task } from '../Todolist.tsx'
+import { TaskType } from '../App.tsx'
 
 interface Props {
-  tasks: Task[]
-  setTasks: (tasks: Task[]) => void
+  setTasks: Dispatch<SetStateAction<TaskType>>
+  todolistId: string
 }
 
-export const AddTask = ({ tasks, setTasks }: Props) => {
+export const AddTask = ({ setTasks, todolistId }: Props) => {
   const [value, setValue] = useState<string>('')
 
   const addTask = () => {
     if (value) {
-      const newArr = [...tasks]
-      newArr.unshift({ id: uuidv4(), task: value, isDone: false })
-      setTasks(newArr)
+      setTasks((prevState) => {
+        const newTask: Task = { id: uuidv4(), task: value, isDone: false, todolistId }
+        const tasks = prevState[todolistId]
+        const newTasks = [newTask, ...tasks]
+
+        return { ...prevState, ...{ [todolistId]: newTasks } }
+      })
       setValue('')
     }
   }
