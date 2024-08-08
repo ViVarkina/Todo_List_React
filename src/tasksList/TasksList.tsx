@@ -2,6 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { Task } from '../Todolist.tsx'
 import css from './TasksList.module.css'
 import { TaskType } from '../App.tsx'
+import { ChangeTitle } from "../changeTitle/ChangeTitle.tsx";
 
 interface PropsType {
   filteredTask: Task[]
@@ -31,6 +32,16 @@ export const TasksList = ({ setTasks, filteredTask, todolistId }: PropsType) => 
     })
   }
 
+  const onSaveTitleTask=(id:string,value:string, callback:()=>void)=>{
+    console.log(value);
+    setTasks(prevState => {
+      const tasks = prevState[todolistId]
+      const newTask=tasks.map(item=>item.id===id?{...item,task:value}: item)
+      return {...prevState,...{ }}
+    })
+    callback()
+  }
+
   return (
     <>
       <ul>
@@ -41,8 +52,7 @@ export const TasksList = ({ setTasks, filteredTask, todolistId }: PropsType) => 
               checked={el.isDone}
               onChange={(event) => onCheckedCheckbox(event, el.id)}
             />
-            {el.task}
-            <button>изменить</button>
+            <ChangeTitle title={el.task} saveTitle={(value:string, callback:()=>void)=>onSaveTitleTask(el.id,value,callback)}/>
             <button onClick={() => onDeleteTask(el.id)}>х</button>
           </li>
         ))}

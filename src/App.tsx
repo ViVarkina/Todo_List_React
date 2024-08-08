@@ -13,8 +13,8 @@ const todolistId1 = uuidv4()
 const todolistId2 = uuidv4()
 
 const initialTodolist: TodolistType[] = [
-  { id: todolistId1, title: 'Todo list 1' },
-  { id: todolistId2, title: 'Todo list 2' },
+  { id: todolistId1, title: 'Todo list 2' },
+  { id: todolistId2, title: 'Todo list 1' },
 ]
 
 export interface TaskType {
@@ -49,6 +49,7 @@ function App() {
             tasks={tasks[todolist.id]}
             setTasks={setTasks}
             todolistId={todolist.id}
+            setTodoLists={setTodolist}
           />)
       })}
     </>
