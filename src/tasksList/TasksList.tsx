@@ -37,7 +37,7 @@ export const TasksList = ({ setTasks, filteredTask, todolistId }: PropsType) => 
     setTasks(prevState => {
       const tasks = prevState[todolistId]
       const newTask=tasks.map(item=>item.id===id?{...item,task:value}: item)
-      return {...prevState,...{ }}
+      return {...prevState,...{[todolistId]:newTask}}
     })
     callback()
   }
